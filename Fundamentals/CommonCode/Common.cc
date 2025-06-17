@@ -21,7 +21,8 @@
 #endif
   };
 
-  Fundamentals::Common::errorOut(1, errorFormatting, programName, usageString);
+  Fundamentals::Common::errorOut(Fundamentals::Common::ExitCodes::Failure,
+                                 errorFormatting, programName, usageString);
 }
 
 [[noreturn]] void Fundamentals::Common::tellVersion() {
