@@ -32,12 +32,15 @@ int main(int argc, char** argv) {
     }
   }
 
-  if (argc - optind < 2)
+  const int fileCount = argc - optind;
+
+  if (fileCount < 2)
     Fundamentals::Common::usage(Fundamentals::Mv::ProgramName,
                                 Fundamentals::Mv::UsageString);
 
   const std::filesystem::path target{
       std::filesystem::weakly_canonical(argv[argc - 1])};
+
   for (int i{optind}; i < argc - 1; ++i) {
     const std::filesystem::path source{argv[i]};
 
@@ -45,6 +48,11 @@ int main(int argc, char** argv) {
       Fundamentals::Common::errorOut(Fundamentals::Common::ExitCodes::Failure,
                                      "File \"{}\" does not exist",
                                      source.native());
+
+    if (fileCount > 2 && !std::filesystem::is_directory(target))
+      Fundamentals::Common::errorOut(Fundamentals::Common::ExitCodes::Failure,
+                                     "File \"{}\" is not a directory",
+                                     target.native());
 
     try {
       const std::filesystem::path destination{
@@ -55,7 +63,7 @@ int main(int argc, char** argv) {
       if (errorContext.code() == std::errc::cross_device_link)
         Fundamentals::Mv::moveByCopying(source, target);
       else
-        Fundamentals::Common::warning("Failed to move '{}' ({})",
+        Fundamentals::Common::warning("Failed to move \"{}\" ({})",
                                       source.native(), errorContext.what());
     }
   }
