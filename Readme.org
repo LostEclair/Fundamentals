@@ -1,0 +1,28 @@
+#+TITLE: Fundamentals
+
+*NOTE: Fundamentals are still WIP*
+
+Fundamentals is a set of core utilities that aims to be as simple
+as possible without sacrificing compatibility with /POSIX/.
+
+* Build instructions
+** What you need
+1. C++20 compiler
+2. Meson build system
+3. (Optionally) *scdoc* for generating manpages
+
+** How to build
+#+BEGIN_SRC shell
+  meson setup Build
+  meson compile -C Build/
+#+END_SRC
+
+*** Test installation directory
+A *test installation directory* may help you if you are tinkering with this project.
+
+#+BEGIN_SRC shell
+  meson configure Build/ -Dprefix=${PWD}/Install
+
+  meson install -C Build/
+  ./Install/bin/echo 'Hello, World'
+#+END_SRC

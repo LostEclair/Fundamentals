@@ -1,0 +1,4 @@
+option('compile-man-pages',
+       type: 'feature',
+       value: 'auto',
+       description: 'Compile and install man pages')

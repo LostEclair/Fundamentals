@@ -1,0 +1,11 @@
+subdir('CommonCode')
+
+subdir('Basename')
+subdir('Dirname')
+subdir('Echo')
+subdir('ExitCodeEmitter')
+subdir('Mv')
+subdir('Sleep')
+subdir('Uname')
+subdir('Whoami')
+subdir('Cat')

@@ -1,0 +1,6 @@
+# Clangd related
+.clangd
+
+# Build and *test* installation directories
+Build
+Install
