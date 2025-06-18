@@ -21,8 +21,12 @@ as possible without sacrificing compatibility with /POSIX/.
 A *test installation directory* may help you if you are tinkering with this project.
 
 #+BEGIN_SRC shell
-  meson configure Build/ -Dprefix=${PWD}/Install
+  meson configure Build/ --prefix=${PWD}/Install
 
   meson install -C Build/
   ./Install/bin/echo 'Hello, World'
 #+END_SRC
+
+* License
+Fundamentals are licensed under the terms of the Apache-2.0 license.
+For more information, please check out the [[./License]] file.
