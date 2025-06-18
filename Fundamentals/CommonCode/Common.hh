@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <unistd.h>
+#include <cstdlib>
 #include <format>
 #include <iostream>
 
@@ -14,11 +16,11 @@ namespace Fundamentals::Common {
 namespace ExitCodes {
 
 /// @brief Is 0
-constexpr int Success{0};
+constexpr int Success{EXIT_SUCCESS};
 
 /// @brief Is 1
-constexpr int Failure{1};
-
+constexpr int Failure{EXIT_FAILURE};
+  
 }  // namespace ExitCodes
 
 /// @brief Show usage message and then, quit (with exit code 1)
