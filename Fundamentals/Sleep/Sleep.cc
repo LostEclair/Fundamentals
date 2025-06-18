@@ -8,6 +8,10 @@
 
 #include <Common.hh>
 #include <chrono>
+#include <climits>
+#include <csignal>
+#include <stdexcept>
+#include <string>
 #include <thread>
 
 int main(int argc, char **argv) {
@@ -15,27 +19,33 @@ int main(int argc, char **argv) {
     Fundamentals::Common::usage(Fundamentals::Sleep::ProgramName,
                                 Fundamentals::Sleep::UsageString);
 
-  const std::string providedDuration{argv[1]};
+  signal(SIGALRM, [](int) noexcept {
+    std::exit(Fundamentals::Common::ExitCodes::Success);
+  });
+
+  const std::string userInput{argv[1]};
+
   try {
-    const std::chrono::duration<float> sleepDuration{
-        std::stof(providedDuration)};
+    size_t stofLastPosition;
+    const unsigned long seconds{std::stoul(userInput, &stofLastPosition, 10)};
+    if (stofLastPosition != userInput.size())
+      Fundamentals::Common::errorOut(
+          Fundamentals::Common::ExitCodes::Failure,
+          "String \"{}\" contains non-numerical characters", userInput);
 
-    if (sleepDuration.count() < 0)
-      Fundamentals::Common::errorOut(Fundamentals::Common::ExitCodes::Failure,
-                                     "Looks like the value {} is negative",
-                                     providedDuration);
-
+    const std::chrono::seconds sleepDuration(seconds);
     std::this_thread::sleep_for(sleepDuration);
   } catch (const std::invalid_argument &_) {
     Fundamentals::Common::errorOut(
         Fundamentals::Common::ExitCodes::Failure,
-        "Looks like the value \"{}\" is not a number or float",
-        providedDuration);
+        "String \"{}\" does not contain any integers.", userInput);
   } catch (const std::out_of_range &_) {
     Fundamentals::Common::errorOut(
         Fundamentals::Common::ExitCodes::Failure,
-        "Looks like the value {} is too big (or small)", providedDuration);
+        "Value {} is not in the range of an unsigned integer (From 0 to {})",
+        userInput, ULONG_MAX);
   }
 
+  std::signal(SIGALRM, SIG_DFL);
   return Fundamentals::Common::ExitCodes::Success;
 }
