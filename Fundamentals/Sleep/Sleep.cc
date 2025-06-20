@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
   } catch (const std::out_of_range &_) {
     Fundamentals::Common::errorOut(
         Fundamentals::Common::ExitCodes::Failure,
-        "Value {} is not in the range of an unsigned integer (From 0 to {})",
+        "Value {} is not in the range of an unsigned long integer (From 0 to {})",
         userInput, ULONG_MAX);
   }
 
