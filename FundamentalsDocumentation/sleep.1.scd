@@ -8,7 +8,6 @@ sleep - sleep given amount of seconds
 
 # DESCRIPTION
 Pause for given amount of seconds.
-User can provide floats as argument for the *sleep* command. (e.g. 0.5)
 
 # EXIT CODE
 The *sleep* command returns 0 on success.
